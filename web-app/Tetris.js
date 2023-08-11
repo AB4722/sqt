@@ -495,6 +495,25 @@ Tetris.soft_drop = function (game) {
     return descend(game);
 };
 
+// this will add 1 to the soft counter everytime there is a soft drop
+let softDropCount = 0; 
+document.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowDown") {
+        softDropCount += 1; 
+        console.log(`Soft Drop Count: ${softDropCount}`);
+    }
+});
+
+// this will add 2 to the counter everytime hard drop then we can somehow add this to the score hehe
+let hardDropCount = 0; 
+document.addEventListener("keydown", function (event) {
+    if (event.key === " ") {
+        hardDropCount += 2;
+        console.log(`Hard Drop Count: ${hardDropCount}`);
+    }
+});
+
+
 /**
  * Perform a hard drop, where the piece immediatelt fully descends
  * until it hits the bottom of the field or another block.
@@ -509,11 +528,13 @@ Tetris.hard_drop = function (game) {
     if (Tetris.is_game_over(game)) {
         return game;
     }
+    // hardDropCount+=1; // Increment the hard drop count
+    // // console.log(`Hard Drop Count: ${hardDropCount}`);
     const dropped_once = descend(game);
     if (R.equals(game, dropped_once)) {
         return Tetris.next_turn(game);
     }
-    return Tetris.hard_drop(dropped_once);
+    return Tetris.hard_drop(dropped_once); 
 };
 
 const lose = R.set(R.lensProp("game_over"), true);
@@ -567,7 +588,7 @@ Tetris.countFullLines = function (field) {
  * @returns {Tetris.Game}
  */
 Tetris.next_turn = function (game) {
-    console.log(game);
+    //console.log(game);
 
     if (game.game_over) {
         return game;
@@ -598,9 +619,9 @@ Tetris.next_turn = function (game) {
 // asdsad
     // const clearedLines = game.field.filter(is_complete_line).length; // asdas
     // AAAAAAAAALSJDALSKJDL
-    console.log(game.field)
+    //console.log(game.field)
     const clearedLines = Tetris.countFullLines(locked_field)
-    console.log(clearedLines)
+    //console.log(clearedLines)
     const updatedScore = Score.cleared_lines(clearedLines, game.score);
     // r.foreach row in board: 
     //     if is_complete_line:
