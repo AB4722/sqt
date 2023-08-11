@@ -492,9 +492,11 @@ Tetris.soft_drop = function (game) {
     if (Tetris.is_game_over(game)) {
         return game;
     }
+    
     return descend(game);
 };
 
+// ASDNSAKJLDSKJDJADLKAJD12312311231?!?!?!???!??!??!??!?!??!?!?!??!?!?!?!??!?!?!??!?!?!???!
 // this will add 1 to the soft counter everytime there is a soft drop
 let softDropCount = 0; 
 document.addEventListener("keydown", function (event) {
