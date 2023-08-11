@@ -124,3 +124,4 @@ const timer_function = function () {
 setTimeout(timer_function, 500);
 
 update_grid();
+

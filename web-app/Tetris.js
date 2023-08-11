@@ -543,6 +543,17 @@ const clear_lines = R.pipe(
     pad_field
 );
 
+//jkahdkajshdnewthing
+
+// r.foreach row in board: 
+//     if is_complete_line:
+// const clearedLines = clearedLines + 1 
+// akdhakjsdh;aksjdhsa[]
+
+Tetris.countFullLines = function (field) {
+    return field.filter(is_complete_line).length;
+};
+
 /**
  * next_turn advances the Tetris game.
  * It will attempt to descend the current tetromino once.
@@ -583,6 +594,21 @@ Tetris.next_turn = function (game) {
     // So lock the current piece in place and deploy the next.
     const locked_field = lock(game);
 
+
+// asdsad
+    // const clearedLines = game.field.filter(is_complete_line).length; // asdas
+    // AAAAAAAAALSJDALSKJDL
+    console.log(game.field)
+    const clearedLines = Tetris.countFullLines(locked_field)
+    console.log(clearedLines)
+    const updatedScore = Score.cleared_lines(clearedLines, game.score);
+    // r.foreach row in board: 
+    //     if is_complete_line:
+    //     const clearedLines = clearedLines + 1 
+
+// asdsas
+
+
     const cleared_field = clear_lines(locked_field);
 
     const [next_tetromino, bag] = game.bag();
@@ -594,7 +620,7 @@ Tetris.next_turn = function (game) {
         "game_over": false,
         "next_tetromino": next_tetromino,
         "position": starting_position,
-        "score": game.score
+        "score": updatedScore
     };
 };
 
@@ -609,3 +635,8 @@ Tetris.is_game_over = function (game) {
 };
 
 export default Object.freeze(Tetris);
+
+
+// figure out whether the board is displaying the correct thing as the game is being played
+// check console log countFull Lines output 
+//check score is 
