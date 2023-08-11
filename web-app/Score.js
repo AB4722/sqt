@@ -6,6 +6,7 @@
  */
 const Score = {};
 
+
 /**
  * The score object contains information about the score of the game.
  * Currently it is implemented as a single number,
@@ -51,7 +52,7 @@ Score.level = function (score) {
  * @param {Score.Score} score The current score object.
  * @returns {Score.Score} The updated score object.
  */
- Score.cleared_lines = function (linesCleared, score) {
+ Score.cleared_lines = function (linesCleared, score, softDropCount, hardDropCount) {
     let additionalScore = 0;
 
     switch (linesCleared) {
@@ -68,6 +69,10 @@ Score.level = function (score) {
             additionalScore = 800;
             break;
     }
+
+    additionalScore += softDropCount;
+
+    additionalScore += hardDropCount;
 
     if (score.last_cleared_lines === 4) {
         additionalScore = additionalScore * 1.5;

@@ -624,7 +624,7 @@ Tetris.next_turn = function (game) {
     //console.log(game.field)
     const clearedLines = Tetris.countFullLines(locked_field)
     //console.log(clearedLines)
-    const updatedScore = Score.cleared_lines(clearedLines, game.score);
+    const updatedScore = Score.cleared_lines(clearedLines, game.score, softDropCount, hardDropCount);
     // r.foreach row in board: 
     //     if is_complete_line:
     //     const clearedLines = clearedLines + 1 
@@ -635,7 +635,8 @@ Tetris.next_turn = function (game) {
     const cleared_field = clear_lines(locked_field);
 
     const [next_tetromino, bag] = game.bag();
-
+    softDropCount = 0;
+    hardDropCount = 0;
     return {
         "bag": bag,
         "current_tetromino": game.next_tetromino,
