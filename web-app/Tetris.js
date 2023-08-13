@@ -496,7 +496,6 @@ Tetris.soft_drop = function (game) {
     return descend(game);
 };
 
-// ASDNSAKJLDSKJDJADLKAJD12312311231?!?!?!???!??!??!??!?!??!?!?!??!?!?!?!??!?!?!??!?!?!???!
 // this will add 1 to the soft counter everytime there is a soft drop
 let softDropCount = 0; 
 document.addEventListener("keydown", function (event) {
@@ -506,7 +505,8 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
-// this will add 2 to the counter everytime hard drop then we can somehow add this to the score hehe
+// This will add 2 to the counter everytime score to increase by 2 point on a hard-drop 
+//(when the tetromino drops as far as possible and immediately locks - i.e. by pressing [space] on the keyboard)
 let hardDropCount = 0; 
 document.addEventListener("keydown", function (event) {
     if (event.key === " ") {
@@ -617,10 +617,6 @@ Tetris.next_turn = function (game) {
     // So lock the current piece in place and deploy the next.
     const locked_field = lock(game);
 
-
-// asdsad
-    // const clearedLines = game.field.filter(is_complete_line).length; // asdas
-    // AAAAAAAAALSJDALSKJDL
     //console.log(game.field)
     const clearedLines = Tetris.countFullLines(locked_field)
     //console.log(clearedLines)
@@ -629,7 +625,6 @@ Tetris.next_turn = function (game) {
     //     if is_complete_line:
     //     const clearedLines = clearedLines + 1 
 
-// asdsas
 
 
     const cleared_field = clear_lines(locked_field);
@@ -659,8 +654,3 @@ Tetris.is_game_over = function (game) {
 };
 
 export default Object.freeze(Tetris);
-
-
-// figure out whether the board is displaying the correct thing as the game is being played
-// check console log countFull Lines output 
-//check score is 
