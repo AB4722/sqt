@@ -100,6 +100,8 @@ document.body.onkeydown = function (event) {
     }
     if (event.key === "ArrowDown") {
         game = Tetris.soft_drop(game);
+        //lets make it run a function in score that adds 1 every time its pressed
+        //score = Tetris.soft()
     }
     if (event.key === "ArrowLeft") {
         game = Tetris.left(game);
@@ -109,6 +111,8 @@ document.body.onkeydown = function (event) {
     }
     if (event.key === " ") {
         game = Tetris.hard_drop(game);
+        //lets make it run a function in score that adds 2 for every level when pressed
+        //score = Tetris.hard_drop_scoring()
     }
     update_grid(); 
 };

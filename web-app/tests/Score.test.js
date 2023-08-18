@@ -242,7 +242,7 @@ OOOOOOOOI-`; //now we can just slot an I in easy peasy
         `A hard drop score 2 point per cell descended`,
         function () {
             // Lets just create a board then do one hard drop and check the score has changed by 2 per cell
-            et game = Tetris.new_game();
+            let game = Tetris.new_game();
             let field_str = `----------
 ----------
 ----------

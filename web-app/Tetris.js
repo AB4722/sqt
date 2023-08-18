@@ -488,6 +488,8 @@ const descend = function (game) {
  * @param {Tetris.Game} game The initial state of a game.
  * @returns {Tetris.Game} The state after a soft drop is attempted.
  */
+
+
 Tetris.soft_drop = function (game) {
     if (Tetris.is_game_over(game)) {
         return game;
@@ -496,8 +498,55 @@ Tetris.soft_drop = function (game) {
     return descend(game);
 };
 
+// Tetris.soft_drop = function (game) {
+//     if (Tetris.is_game_over(game)) {
+//         return game;
+//     }
+    
+//     // Increase the soft drop count by 1
+//     softDropCount++;
+
+//     const descended = descend(game);
+//     if (!R.equals(game, descended)) {
+//         return descended;
+//     }
+//     if (is_blocked_by_geometry(game.field, game.current_tetromino, game.position)) {
+//         return lose(game);
+//     }
+
+//     const locked_field = lock(game);
+//     const clearedLines = Tetris.countFullLines(locked_field);
+//     const updatedScore = Score.cleared_lines(clearedLines, game.score, softDropCount, hardDropCount);
+
+//     const cleared_field = clear_lines(locked_field);
+
+//     const [next_tetromino, bag] = game.bag();
+//     softDropCount = 0; 
+//     hardDropCount = 0; 
+//     return {
+//         "bag": bag,
+//         "current_tetromino": game.next_tetromino,
+//         "field": cleared_field,
+//         "game_over": false,
+//         "next_tetromino": next_tetromino,
+//         "position": starting_position,
+//         "score": updatedScore
+//     };
+// };
+
+
+//watch the bit above it could become an issue^^
+
+
+
+
+
+
+
+
 // this will add 1 to the soft counter everytime there is a soft drop
 let softDropCount = 0; 
+let hardDropCount = 0; 
 document.addEventListener("keydown", function (event) {
     if (event.key === "ArrowDown") {
         softDropCount += 1; 
@@ -507,14 +556,14 @@ document.addEventListener("keydown", function (event) {
 
 // This will add 2 to the counter everytime score to increase by 2 point on a hard-drop 
 //(when the tetromino drops as far as possible and immediately locks - i.e. by pressing [space] on the keyboard)
-let hardDropCount = 0; 
-document.addEventListener("keydown", function (event) {
-    if (event.key === " ") {
-        hardDropCount += 2;
-        console.log(`Hard Drop Count: ${hardDropCount}`);
-    }
-});
-
+// let hardDropCount = 0; 
+// document.addEventListener("keydown", function (event) {
+//     if (event.key === " ") {
+//         hardDropCount += 2;
+//         console.log(`Hard Drop Count: ${hardDropCount}`);
+//     }
+// });
+// NO LONGER NEED THIS
 
 /**
  * Perform a hard drop, where the piece immediatelt fully descends
@@ -526,18 +575,61 @@ document.addEventListener("keydown", function (event) {
  * @param {Tetris.Game} game The initial state of a game.
  * @returns {Tetris.Game} The state after a soft drop is attempted.
  */
+
+// Tetris.hard_drop = function (game) {
+//     if (Tetris.is_game_over(game)) {
+//         return game;
+//     }
+//     // hardDropCount+=1; // Increment the hard drop count
+//     // // console.log(`Hard Drop Count: ${hardDropCount}`);
+//     const dropped_once = descend(game);
+//     if (R.equals(game, dropped_once)) {
+//         return Tetris.next_turn(game);
+//     }
+//     return Tetris.hard_drop(dropped_once); 
+// };
+
+
+let hardDropLevels = 0;
+
 Tetris.hard_drop = function (game) {
     if (Tetris.is_game_over(game)) {
         return game;
     }
-    // hardDropCount+=1; // Increment the hard drop count
-    // // console.log(`Hard Drop Count: ${hardDropCount}`);
-    const dropped_once = descend(game);
-    if (R.equals(game, dropped_once)) {
-        return Tetris.next_turn(game);
+
+    let dropped_game = game;
+    while (true) {
+        const descended = descend(dropped_game);
+        if (R.equals(dropped_game, descended)) {
+            break;
+        }
+        hardDropLevels++;
+        dropped_game = descended;
     }
-    return Tetris.hard_drop(dropped_once); 
+
+    const hardDropScore = 2 * hardDropLevels;
+
+    const locked_field = lock(dropped_game);
+    const clearedLines = Tetris.countFullLines(locked_field);
+    const updatedScore = Score.cleared_lines(clearedLines, game.score, softDropCount, hardDropScore);
+
+    const cleared_field = clear_lines(locked_field);
+
+    const [next_tetromino, bag] = game.bag();
+
+    hardDropLevels = 0;
+    return {
+        "bag": bag,
+        "current_tetromino": game.next_tetromino,
+        "field": cleared_field,
+        "game_over": false,
+        "next_tetromino": next_tetromino,
+        "position": starting_position,
+        "score": updatedScore
+    };
 };
+
+
 
 const lose = R.set(R.lensProp("game_over"), true);
 
@@ -577,6 +669,7 @@ Tetris.countFullLines = function (field) {
     return field.filter(is_complete_line).length;
 };
 
+
 /**
  * next_turn advances the Tetris game.
  * It will attempt to descend the current tetromino once.
@@ -589,7 +682,7 @@ Tetris.countFullLines = function (field) {
  * @param {Tetris.Game} game
  * @returns {Tetris.Game}
  */
-Tetris.next_turn = function (game) {
+ Tetris.next_turn = function (game) {
     //console.log(game);
 
     if (game.game_over) {
