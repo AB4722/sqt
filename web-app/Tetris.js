@@ -489,6 +489,45 @@ const descend = function (game) {
  * @returns {Tetris.Game} The state after a soft drop is attempted.
  */
 
+//  let softDropLevels = 0;
+
+//  Tetris.soft_drop = function (game) {
+//      if (Tetris.is_game_over(game)) {
+//          return game;
+//      }
+ 
+//      let dropped_game = game;
+//      while (true) {
+//          const descended = descend(dropped_game);
+//          if (R.equals(dropped_game, descended)) {
+//              break;
+//          }
+//          softDropLevels++;
+//          dropped_game = descended;
+//      }
+ 
+//      const softDropScore = 2 * softDropLevels;
+ 
+//      const locked_field = lock(dropped_game);
+//      const clearedLines = Tetris.countFullLines(locked_field);
+//      const updatedScore = Score.cleared_lines(clearedLines, game.score, softDropCount, softDropScore);
+ 
+//      const cleared_field = clear_lines(locked_field);
+  
+//      const [next_tetromino, bag] = game.bag();
+ 
+//      softDropLevels = 0;
+//      return {
+//          "bag": bag,
+//          "current_tetromino": game.next_tetromino,
+//          "field": cleared_field,
+//          "game_over": false,
+//          "next_tetromino": next_tetromino,
+//          "position": starting_position,
+//          "score": updatedScore
+//      };
+//  };
+
 
 Tetris.soft_drop = function (game) {
     if (Tetris.is_game_over(game)) {
@@ -497,6 +536,26 @@ Tetris.soft_drop = function (game) {
     
     return descend(game);
 };
+// this will add 1 to the soft counter everytime there is a soft drop
+let softDropCount = 0; 
+let hardDropCount = 0; 
+document.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowDown") {
+        softDropCount += 1; 
+        console.log(`Soft Drop Count: ${softDropCount}`);
+    }
+});
+
+//ok so this works but needs to change to not use event listener^^
+
+
+
+
+
+
+
+
+
 
 // Tetris.soft_drop = function (game) {
 //     if (Tetris.is_game_over(game)) {
@@ -540,19 +599,6 @@ Tetris.soft_drop = function (game) {
 
 
 
-
-
-
-
-// this will add 1 to the soft counter everytime there is a soft drop
-let softDropCount = 0; 
-let hardDropCount = 0; 
-document.addEventListener("keydown", function (event) {
-    if (event.key === "ArrowDown") {
-        softDropCount += 1; 
-        console.log(`Soft Drop Count: ${softDropCount}`);
-    }
-});
 
 // This will add 2 to the counter everytime score to increase by 2 point on a hard-drop 
 //(when the tetromino drops as far as possible and immediately locks - i.e. by pressing [space] on the keyboard)

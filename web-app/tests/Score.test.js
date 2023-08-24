@@ -157,6 +157,8 @@ OOOOOOOOI-
 OOOOOOOOI-
 OOOOOOOOI-`; //now we can just slot an I in easy peasy
             game.current_tetromino = Tetris.I_tetromino
+            game.field = field_string.split("\n").map(
+                (s) => s.replace(/-/g, " ").split("")
             game = Tetris.rotate_ccw(game)
             R.range(0,5).forEach(function () { //Making it go right 5 times
                 game = Tetris.right(game);
@@ -227,8 +229,8 @@ OOOOOOOOI-`; //now we can just slot an I in easy peasy
         `A soft drop score 1 point per cell descended`,
         function () {
             // Lets just create a board then do one soft drop and check the score has changed by 1 after
-            let game = example_game //use any board 
-            let game.score.score = '0' //lets make sure score starts at 0
+            game = example_game //use any board 
+            game.score.score = '0' //lets make sure score starts at 0
             game.current_tetromino = Tetris.I_tetromino //random tetromino
             game = Tetris.soft_drop(game); //do 1 soft drop which should be 1 point
             game.Tetris.next_turn(game); //go to next turn
