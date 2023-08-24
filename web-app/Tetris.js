@@ -536,19 +536,19 @@ Tetris.soft_drop = function (game) {
     
     return descend(game);
 };
+
 // this will add 1 to the soft counter everytime there is a soft drop
 let softDropCount = 0; 
 let hardDropCount = 0; 
-document.addEventListener("keydown", function (event) {
-    if (event.key === "ArrowDown") {
-        softDropCount += 1; 
-        console.log(`Soft Drop Count: ${softDropCount}`);
-    }
-});
-
+// document.addEventListener("keydown", function (event) {
+//     if (event.key === "ArrowDown") {
+//         softDropCount += 1; 
+//         console.log(`Soft Drop Count: ${softDropCount}`);
+//     }
+// });
 //ok so this works but needs to change to not use event listener^^
 
-
+// ok so issue currently is that the way the soft drop function works is that it uses the descened functioon but so does hard drop
 
 
 

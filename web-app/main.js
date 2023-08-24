@@ -93,12 +93,21 @@ document.body.onkeyup = function () {
     key_locked = false;
 };
 
+let softDropCount = 0;
+function incrementSoftDropCount() {
+    softDropCount += 1;
+    game.score.score += 1;
+    console.log(`Soft Drop Count: ${softDropCount}`);
+}
+
 document.body.onkeydown = function (event) {
     if (!key_locked && event.key === "ArrowUp") {
         key_locked = true;
         game = Tetris.rotate_ccw(game);
     }
     if (event.key === "ArrowDown") {
+        // game.score.softDropCount += 1; //this probs wont work
+        incrementSoftDropCount(game);
         game = Tetris.soft_drop(game);
         //lets make it run a function in score that adds 1 every time its pressed
         //score = Tetris.soft()
